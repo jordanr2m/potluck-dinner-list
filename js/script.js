@@ -13,6 +13,9 @@ const guestFull = document.querySelector(".alert");
 
 
 // Jordan's code (above is starter code)
+const assignButton = document.querySelector(".assign");
+const assignedItems = document.querySelector(".assigned-items");
+
 addGuestButton.addEventListener("click", function () { 
     const guest = guestInput.value;
     // console.log(guest); -- Testing to make sure guest is working properly
@@ -23,15 +26,15 @@ addGuestButton.addEventListener("click", function () {
     }
 });
 
-const clearInput = function () { 
-    guestInput.value = "";
-};
-
 // Code for adding user input to list
 const addToList = function (guest) {
     const listItem = document.createElement("li");
     listItem.innerText = guest;
     guestList.append(listItem);
+};
+
+const clearInput = function () { 
+    guestInput.value = "";
 };
 
 const updateGuestCount = function () {
@@ -45,6 +48,55 @@ const updateGuestCount = function () {
         guestFull.classList.remove("hide");
     }
 };
+
+const assignItems = function () {
+    const potluckItems = [
+        "fruit salad", 
+        "potato salad", 
+        "dessert", 
+        "sandwhiches", 
+        "drinks", 
+        "cake", 
+        "chips", 
+        "cheese & crackers", 
+        "baked beans", 
+        "green beans", 
+        "smoked sausages"];
+
+    const allGuests = document.querySelectorAll(".guest-list li");
+
+    for (let guest of allGuests) {
+        let randomPotluckIndex = Math.floor(Math.random() * potluckItems.length);
+        let randomPotluckItem = potluckItems[randomPotluckIndex];
+            // In order to get a random element from the array, you must target the elements' index positions within the array
+
+        let listItem = document.createElement("li");
+        listItem.innerText = `${guest.innerText} is bringing ${randomPotluckItem}`;
+            //  You’re using guest.innerText to access the name inside the li element. If you used guest without innerText, you’d grab the actual list element instead of the text. The names will appear in the same order in this new list as they did in the original list (allGuests)
+        assignedItems.append(listItem);
+
+        potluckItems.splice(randomPotluckIndex, 1);
+            // To prevent assigning duplicate items, you must update the potluckItems array each time a dish is assigned. This line of code goes in the for..of loop so that it can be applied to every element that passes through the loop before the next itterarion begins
+    };
+};
+
+assignButton.addEventListener("click", function () { 
+    assignItems();
+    assignButton.disabled = true;
+        // This line of code fixes the duplicate dish assignment by disabling the button once the loop completes using the disabled property and the boolean true
+});
+
+// Jordan's Test to make Enter button work the same as addGuestButton
+document.addEventListener("keydown", function (e) { 
+    if (e.key === "Enter") {
+        const guest = guestInput.value;
+        if (guest !== "") {
+            addToList(guest);
+            updateGuestCount();
+            clearInput();
+        };
+    };
+});
 
 // //Jordan's Test - Creating a singular function for adding a guest
 // const addGuestFunction = function () { 
