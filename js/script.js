@@ -86,7 +86,7 @@ assignButton.addEventListener("click", function () {
         // This line of code fixes the duplicate dish assignment by disabling the button once the loop completes using the disabled property and the boolean true
 });
 
-// Jordan's Test to make Enter button work the same as addGuestButton
+// Jordan's Test to make Enter button work the same as addGuestButton - Taken from instructor's tips
 document.addEventListener("keydown", function (e) { 
     if (e.key === "Enter") {
         const guest = guestInput.value;
@@ -96,6 +96,10 @@ document.addEventListener("keydown", function (e) {
             clearInput();
         };
     };
+    // } else if (e.key === "Eneter" && !assignButton.disabled) {
+    //     assignItems();
+    //     assignButton.disabled = true;
+    // };
 });
 
 // //Jordan's Test - Creating a singular function for adding a guest
