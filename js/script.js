@@ -46,6 +46,8 @@ const updateGuestCount = function () {
         guestInputLabel.classList.add("hide");
         guestInput.classList.add("hide");
         guestFull.classList.remove("hide");
+        assignButton.disabled = false;
+            // This line of code is for the Enter button functionality I wrote
     }
 };
 
@@ -86,41 +88,17 @@ assignButton.addEventListener("click", function () {
         // This line of code fixes the duplicate dish assignment by disabling the button once the loop completes using the disabled property and the boolean true
 });
 
-// Jordan's Test to make Enter button work the same as addGuestButton - Taken from instructor's tips
+// Jordan's Test to make Enter button work the same as addGuestButton and AssignItems button (both buttons!) - Taken from instructor's tips
 document.addEventListener("keydown", function (e) { 
-    if (e.key === "Enter") {
+    if (e.key === "Enter" && assignButton.disabled) {
         const guest = guestInput.value;
         if (guest !== "") {
             addToList(guest);
             updateGuestCount();
             clearInput();
         };
+    } else if (e.key === "Enter" && !assignButton.disabled) {
+        assignItems();
+        assignButton.disabled = true;
     };
-    // } else if (e.key === "Eneter" && !assignButton.disabled) {
-    //     assignItems();
-    //     assignButton.disabled = true;
-    // };
 });
-
-// //Jordan's Test - Creating a singular function for adding a guest
-// const addGuestFunction = function () { 
-//     const guest = guestInput.value;
-//     if (guest !== "") {
-//         let listItem = document.createElement("li");
-//         listItem.innerText = guest;
-//         guestList.append(listItem);
-//         clearInput();
-//     }
-// };
-
-// //Jordan's Test - Having "Enter" work the same as pressing the Add Button
-// document.addEventListener("keydown", function (e) { 
-//     if (e.key === "Enter") {
-//         addGuestFunction();
-//     }
-// });
-
-// // Jordan's Test - Streamlining the "click" event listener
-// addGuestButton.addEventListener("click", function () { 
-//   addGuestFunction();
-// });
